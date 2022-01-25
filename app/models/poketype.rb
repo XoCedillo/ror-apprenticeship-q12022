@@ -1,2 +1,0 @@
-class Poketype < ApplicationRecord
-end

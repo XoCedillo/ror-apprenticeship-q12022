@@ -1,10 +1,10 @@
-<%= form_with(model: poketype) do |form| %>
-  <% if poketype.errors.any? %>
+<%= form_with(model: type) do |form| %>
+  <% if type.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(poketype.errors.count, "error") %> prohibited this poketype from being saved:</h2>
+      <h2><%= pluralize(type.errors.count, "error") %> prohibited this type from being saved:</h2>
 
       <ul>
-        <% poketype.errors.each do |error| %>
+        <% type.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
