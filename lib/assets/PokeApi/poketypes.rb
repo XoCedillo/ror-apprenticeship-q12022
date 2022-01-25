@@ -14,4 +14,4 @@ module PokeApi
   end
 end
 
-# poketypes = PokeApi::Poketype.new
+ poketypes = PokeApi::Poketype.new

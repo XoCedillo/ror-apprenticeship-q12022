@@ -1,0 +1,32 @@
+<%= form_with(model: poketype) do |form| %>
+  <% if poketype.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(poketype.errors.count, "error") %> prohibited this poketype from being saved:</h2>
+
+      <ul>
+        <% poketype.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :poke_id, style: "display: block" %>
+    <%= form.number_field :poke_id %>
+  </div>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :url, style: "display: block" %>
+    <%= form.text_field :url %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

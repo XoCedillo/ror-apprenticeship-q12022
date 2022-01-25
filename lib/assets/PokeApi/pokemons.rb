@@ -21,7 +21,7 @@ module PokeApi
       results.each do |entry|
         poke_id = entry['url'][%r{/\d{1,}/}].sub(%r{/}, '').chomp('/')
         sprite_url = get_by(pokedata: 'pokemon', poke_id: poke_id)['sprites']['front_default']
-        hash = { poke_id: poke_id, name: entry['name'], url: entry['url'], sprite: sprite_url }
+        p hash = { poke_id: poke_id, name: entry['name'], url: entry['url'], sprite: sprite_url }
         list.append(hash)
       end
       list

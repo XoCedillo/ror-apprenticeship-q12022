@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @poketype %>
+
+<div>
+  <%= link_to "Edit this poketype", edit_poketype_path(@poketype) %> |
+  <%= link_to "Back to poketypes", poketypes_path %>
+
+  <%= button_to "Destroy this poketype", @poketype, method: :delete %>
+</div>
