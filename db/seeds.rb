@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+type_records = PokeApi::Type.new
+
+ability_records = PokeApi::Ability.new
+
+
+p type_records
+p ability_records
+
+# pokemon_records = PokeApi::Pokemon.new
+

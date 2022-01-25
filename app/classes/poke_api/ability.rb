@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'config'
+require_relative 'poke_api'
 
 # Class to generate api connection with PokeApi
 module PokeApi
   # Methods for all abilities
-  class Abilities < Base
+  class Ability < PokeApi
     attr_accessor :all, :count
 
     def initialize
@@ -32,20 +32,19 @@ module PokeApi
       list = []
       query = self.class.get("/#{pokedata}?limit=#{@count}}&#{START_OFFSET}=0")
       results = query['results']
+      puts "Dumping records for #{pokedata} in hash form. This might take a while...."
       results.each do |entry|
         poke_id = entry['url'][%r{/\d{1,}/}].sub(%r{/}, '').chomp('/')
-        # effect = effect_of(poke_id: poke_id)
-        # short_effect = short_effect_of(poke_id: poke_id)
-        # hash = { poke_id: poke_id, name: entry['name'], effect: effect, short_effect: short_effect, url: entry['url'] }
         hash = { poke_id: poke_id, name: entry['name'], url: entry['url'] }
         list.append(hash)
       end
+      puts 'Done'
       list
     end
   end
 end
 
-abilities = PokeApi::Abilities.new
+# abilities = PokeApi::Abilities.new
 # p abilities.effect_of(poke_id: '10002')
 # p abilities.short_effect_of(poke_id: '10002')
-p abilities.all
+# p abilities.all

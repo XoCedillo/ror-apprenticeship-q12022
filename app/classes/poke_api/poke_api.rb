@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'config'
+require 'httparty'
 
 # Class to generate api connection with PokeApi
 module PokeApi
   # Methods for all pokemons
-  class Base
+  class PokeApi
     include HTTParty
 
     base_uri 'https://pokeapi.co/api/v2'
@@ -45,7 +45,7 @@ module PokeApi
   end
 end
 
-# base = PokeApi::Base.new
+# base = PokeApi::Connection.new
 # ability_data = base.get_by(pokedata: 'ability', name: 'battle-armor')
 # p ability_data['effect_entries'][1]['effect']
 # p ability_data['effect_entries'][1]['short_effect']
