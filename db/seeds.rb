@@ -16,3 +16,27 @@ p ability_records
 
 # pokemon_records = PokeApi::Pokemon.new
 
+pokemons = PokemonService::GetPokemons.new('pokemons').call
+pokemons.each do |p|
+  pokemon = Pokemon.new 
+  pokemon.name = p[:name]
+  ...
+  if pokemon.save
+    p "pokemon: #{p[:name]}, has been added sucessfully"
+  else
+    p "pokemon: #{p[:name]}, addition has failed"
+  end
+end
+
+
+pokemons = PokemonService::GetPokemons.new('pokemons').call
+pokemons.each do |p|
+  pokemon = Pokemon.new 
+  pokemon.name = p[:name]
+  ...
+  if pokemon.save
+    p "pokemon: #{p[:name]}, has been added sucessfully"
+  else
+    p "pokemon: #{p[:name]}, #{pokemon.errors.messages}"  # ---> iterar sobre las llaves de error
+  end
+end
