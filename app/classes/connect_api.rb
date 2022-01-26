@@ -2,6 +2,7 @@
 
 require 'httparty'
 
+# Class conection for Pokiapi
 class ConnectApi
   include HTTParty
 

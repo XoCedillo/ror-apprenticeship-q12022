@@ -6,5 +6,5 @@ class Pokemon < ApplicationRecord
   has_many :types, through: :pokemon_types
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
-
+  validates :poke_id, presence: true, numericality: { only_integer: true }
 end
