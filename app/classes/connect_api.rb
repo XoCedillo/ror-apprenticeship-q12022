@@ -45,6 +45,7 @@ class ConnectApi
     @list = []
     results = self.class.get("/#{@pokedata}?limit=#{limit}}&#{START_OFFSET}=0")['results']
     results.each do |entry|
+      p @fields.dup
       hash = dump(entry, @fields.dup)
       p "Add #{hash}"
       @list.append(hash)
@@ -67,7 +68,7 @@ class ConnectApi
       fields.pop(fields.index('url'))
     end
     query = self.class.get("/#{@pokedata}/#{hash[:poke_id]}")
-    fields.each { |field| hash[field.to_sym] = query[field.to_s] }
+    fields.each { |field| p field; hash[field.to_sym] = query[field.to_s] }
     hash
   end
 end

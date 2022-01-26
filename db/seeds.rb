@@ -6,37 +6,56 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-type_records = PokeApi::Type.new
+Pokemon.destroy_all
+p 'pokemons table cleaned'
+Ability.destroy_all
+p 'abilities table cleaned'
+Type.destroy_all
+p 'types table cleaned'
 
-ability_records = PokeApi::Ability.new
 
+def fill_types
+  types = PokemonService::GetTypes.new(fields: %w[name url]).call
+  types.each do |t|
+    type = Type.new
+    type.poke_id = t[:poke_id]
+    type.name = t[:name]
+    type.name = t[:url]
+    if type.save
+      p "type: #{a[:name]}, has been added sucessfully"
+    else
+      p "type: #{a[:name]}, #{type.errors.messages}" # ---> iterar sobre las llaves de error
+    end
+  end
+end
 
-p type_records
-p ability_records
+def fill_abilities
+  abilities = PokemonService::GetAbilities.new(fields: %w[name url]).call
+  abilities.each do |a|
+    ability = Ability.new
+    ability.poke_id = a[:poke_id]
+    ability.name = a[:name]
+    ability.name = a[:url]
+    if ability.save
+      p "ability: #{a[:name]}, has been added sucessfully"
+    else
+      p "ability: #{a[:name]}, #{ability.errors.messages}"  # ---> iterar sobre las llaves de error
+    end
+  end
+end
 
-# pokemon_records = PokeApi::Pokemon.new
-
-pokemons = PokemonService::GetPokemons.new('pokemons').call
-pokemons.each do |p|
-  pokemon = Pokemon.new 
-  pokemon.name = p[:name]
-  ...
-  if pokemon.save
-    p "pokemon: #{p[:name]}, has been added sucessfully"
-  else
-    p "pokemon: #{p[:name]}, addition has failed"
+def fiil_pokemons
+  pokemons = PokemonService::GetPokemons.new('pokemons').call
+  pokemons.each do |p|
+    pokemon = Pokemon.new 
+    pokemon.name = p[:name]
+    ...
+    if pokemon.save
+      p "pokemon: #{p[:name]}, has been added sucessfully"
+    else
+      p "pokemon: #{p[:name]}, addition has failed"
+    end
   end
 end
 
 
-pokemons = PokemonService::GetPokemons.new('pokemons').call
-pokemons.each do |p|
-  pokemon = Pokemon.new 
-  pokemon.name = p[:name]
-  ...
-  if pokemon.save
-    p "pokemon: #{p[:name]}, has been added sucessfully"
-  else
-    p "pokemon: #{p[:name]}, #{pokemon.errors.messages}"  # ---> iterar sobre las llaves de error
-  end
-end
