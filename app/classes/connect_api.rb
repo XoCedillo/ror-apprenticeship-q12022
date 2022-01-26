@@ -40,20 +40,20 @@ class ConnectApi
     end
   end
 
-  def call
-    list = []
-    hash = {}
-    results = self.class.get("/#{@pokedata}?limit=#{@count}}&#{START_OFFSET}=0")['results']
+  def call(limit)
+    @list = []
+    results = self.class.get("/#{@pokedata}?limit=#{limit}}&#{START_OFFSET}=0")['results']
     results.each do |entry|
+      hash = {}
       hash[:poke_id] = entry['url'][%r{/\d{1,}/}].sub(%r{/}, '').chomp('/')
       query = self.class.get("/#{@pokedata}/#{hash[:poke_id]}")
       @fields.each do |field|
         hash[field.to_sym] = query[field.to_s]
       end
-      p hash
-      list.append(hash)
+      p "Add #{hash}"
+      @list.append(hash)
     end
-    list
+    p @list
   end
 
   private
