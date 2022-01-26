@@ -7,6 +7,7 @@ class ConnectApi
   include HTTParty
 
   attr_accessor :pokedata, :fields
+  attr_reader :count, :list
 
   base_uri 'https://pokeapi.co/api/v2'
 
@@ -44,16 +45,11 @@ class ConnectApi
     @list = []
     results = self.class.get("/#{@pokedata}?limit=#{limit}}&#{START_OFFSET}=0")['results']
     results.each do |entry|
-      hash = {}
-      hash[:poke_id] = entry['url'][%r{/\d{1,}/}].sub(%r{/}, '').chomp('/')
-      query = self.class.get("/#{@pokedata}/#{hash[:poke_id]}")
-      @fields.each do |field|
-        hash[field.to_sym] = query[field.to_s]
-      end
+      hash = dump(entry, @fields.dup)
       p "Add #{hash}"
       @list.append(hash)
     end
-    p @list
+    @list
   end
 
   private
@@ -61,5 +57,17 @@ class ConnectApi
   def count_all(pokedata)
     response = self.class.get("/#{pokedata}")
     response['count']
+  end
+
+  def dump(entry, fields)
+    hash = {}
+    hash[:poke_id] = entry['url'][%r{/\d{1,}/}].sub(%r{/}, '').chomp('/')
+    unless fields.index('url').nil?
+      hash[:url] = entry['url']
+      fields.pop(fields.index('url'))
+    end
+    query = self.class.get("/#{@pokedata}/#{hash[:poke_id]}")
+    fields.each { |field| hash[field.to_sym] = query[field.to_s] }
+    hash
   end
 end

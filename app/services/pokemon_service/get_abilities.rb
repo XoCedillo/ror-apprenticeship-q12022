@@ -3,11 +3,17 @@
 module PokemonService
   # class GetAbilities
   class GetAbilities
-    def initialize; end
+    attr_reader :fields
 
-    def call
-      connect = ConnectApi.new('ability', %w[name url])
-      connect.call
+    def initialize(fields:)
+      p 'get_abilities service has been initialized'
+      @fields = fields
+    end
+
+    def call(**kwargs)
+      p 'conection with API...'
+      connect = ConnectApi.new('ability', @fields)
+      kwargs[:limit].nil? ? connect.call(connect.count) : connect.call(kwargs[:limit])
     end
   end
 end
