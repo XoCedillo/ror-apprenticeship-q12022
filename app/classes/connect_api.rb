@@ -65,10 +65,11 @@ class ConnectApi
     hash[:poke_id] = entry['url'][%r{/\d{1,}/}].sub(%r{/}, '').chomp('/')
     unless fields.index('url').nil?
       hash[:url] = entry['url']
-      fields.pop(fields.index('url'))
+      fields.delete('url')
     end
     query = self.class.get("/#{@pokedata}/#{hash[:poke_id]}")
-    fields.each { |field| p field; hash[field.to_sym] = query[field.to_s] }
+    p fields
+    fields.each { |field| hash.store(field.to_sym, query[field.to_s]) }
     hash
   end
 end
