@@ -1,22 +1,37 @@
-<div id="<%= dom_id pokemon %>">
-  <p>
-    <strong>Poke:</strong>
-    <%= pokemon.poke_id %>
-  </p>
+<div id="<%= dom_id pokemon %>" class="column is-one-fifth" >
+  <div class="card justify-content">
+    <div class="card-image">
+      <figure class="image is-1by1">
+        <img src=<%= pokemon.sprite %> alt=<%= pokemon.name %>>
+      </figure>
+    </div>
+    <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+          <p class="title is-4"><%= link_to(pokemon.name.capitalize, pokemon.url) %></p>
+          <p class="subtitle is-6"><strong>Poke:</strong><%= link_to("##{pokemon.poke_id}", pokemon.url) %></p>
+        </div>
+      </div>
 
-  <p>
-    <strong>Name:</strong>
-    <%= pokemon.name %>
-  </p>
-
-  <p>
-    <strong>Url:</strong>
-    <%= pokemon.url %>
-  </p>
-
-  <p>
-    <strong>Sprite:</strong>
-    <%= pokemon.sprite %>
-  </p>
-
+      <div class="content">
+        <% pokemon.types.each do |type| %>
+          <span class="tag is-primary is-light"><%= type.name %></span>
+        <% end %>
+        <br>
+        <% pokemon.abilities.each do |ability| %>
+          <span class="tag is-primary"><%= ability.name %></span>
+        <% end %>
+        <br>
+        <br>
+        <div class="buttons has-addons">
+          <button class="button">Edit</button>
+          <button class="button"><%= link_to 'Info', pokemon %></button>
+          <button class="button">Delete</button>
+        </div>
+        <br>
+        <br>
+        <time datetime="2016-1-1" class='has-text-info'><%= "updated at: #{pokemon.updated_at}" %></time>
+      </div>
+    </div>
+  </div>
 </div>

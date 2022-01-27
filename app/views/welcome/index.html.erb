@@ -1,23 +1,28 @@
-    <section class="section">
-      <div class="container">
-             <!-- Left side -->
-        <div class="level-right">
-          <div class="level-item">
-            <div class="field has-addons">
-              <p class="control">
-                <input class="input" type="text" placeholder="Find a pokemon">
-              </p>
-              <p class="control">
-                <button class="button">
-                  Search
-                </button>
-              </p>
-            </div>
-          </div>
-        </div>
+<section class="section">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><%= link_to('Types', types_path) %></li>
+      <li><%= link_to('Abilities', abilities_path) %></li>
+      <li><%= link_to('Pokemons', pokemons_path) %></li>
+      <li class="is-active"><%= link_to('Home', controller: 'welcome', action: 'index') %></li>
+    </ul>
+  </nav>
+</section>
 
-        <h1 class="title">
-          Welcome!
-        </h1>
-      </div>
-    </section>
+<section class="hero is-primary">
+  <div class="hero-body">
+    <p class="title">
+      Welcome
+    </p>
+  </div>
+</section>  
+<div class="block">
+    <div class="card">
+        <div class="card-image">
+          <figure class="image is-16by9">
+            <img src="https://pbs.twimg.com/media/FHsytZUXwAQbds4?format=jpg&name=large" alt="Placeholder image">
+          </figure>
+        </div>
+    </div>
+  </div>
+</div>
