@@ -1,4 +1,6 @@
 class PokemonsController < ApplicationController
+  protect_from_forgery prepend: true
+  before_action :authenticate_user!, except: %i[ show index ]
   before_action :set_pokemon, only: %i[ show edit update destroy ]
 
   # GET /pokemons or /pokemons.json

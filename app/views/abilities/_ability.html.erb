@@ -1,17 +1,39 @@
+
 <div id="<%= dom_id ability %>">
-  <p>
-    <strong>Poke:</strong>
-    <%= ability.poke_id %>
-  </p>
+  <div class="column bd-notification" > 
+    <div class="card">
+      <div class="card-content">
+        <div class="media">
+          <%# <div class="media-left">
+            <figure class="image is-48x48">
+              <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/pokemon-28-674603.png" alt="Placeholder image">
+            </figure>
+          </div> %>
+        <div class="media-content">
+          <p>
+            <strong>Poke:</strong>
+            <%= ability.poke_id %>
+          </p>
 
-  <p>
-    <strong>Name:</strong>
-    <%= ability.name %>
-  </p>
+          <p>
+            <strong>Name:</strong>
+            <%= ability.name %>
+          </p>
 
-  <p>
-    <strong>Url:</strong>
-    <%= ability.url %>
-  </p>
+          <p>
+            <strong>Url:</strong>
+            <%= ability.url %>
+          </p>
+          <p>
+            <%= link_to "Show this ability", ability %>
+          </p>
+        </div>
+
+      </div>
+    </div>   
+  </div> 
 
 </div>
+
+
+

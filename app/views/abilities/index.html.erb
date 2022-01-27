@@ -1,14 +1,72 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Abilities</h1>
+<section class="section">
+  <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+    <ul>
+      <li><%= link_to('Types', types_path) %></li>
+      <li><%= link_to('Abilities', abilities_path) %></li>
+      <li class="is-active"><%= link_to('Pokemons', pokemons_path) %></li>
+      <li><%= link_to('Home', controller: 'welcome', action: 'index') %></li>
+    </ul>
+  </nav>
+</section>
+<section class="hero is-primary">
+  <div class="hero-body">
+    <p class="title">
+      Abilities
+    </p>
+  </div>
+  <div class="box">
+    <div id="pokemons" class="columns is-mobile">
+      <div class="column">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+          <ul>
+            <li>
+              <a <%= link_to "New pokemon", new_pokemon_path %> >
+                <span class="icon is-small">
+                  <i class="fas fa-home" aria-hidden="true"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="column">
+        <!-- Left side -->
+        <div class="level-right">
+          <div class="level-item">
+            <div class="field has-addons">
+              <p class="control">
+                <input class="input" type="text" placeholder="Find an ability">
+              </p>
+              <p class="control">
+                <button class="button">
+                  Search
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
 
-<div id="abilities">
+<div id="abilities" class="columns is-mobile">
+  <div class="column is-one-quarter" > </div>
+  <div class="column" > 
   <% @abilities.each do |ability| %>
     <%= render ability %>
     <p>
       <%= link_to "Show this ability", ability %>
-    </p>
+    </p>  
   <% end %>
+  </div> 
+  <div class="column is-one-quarter" > </div>
 </div>
+
+
+
+
+
 
 <%= link_to "New ability", new_ability_path %>

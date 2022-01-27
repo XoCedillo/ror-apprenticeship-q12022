@@ -24,9 +24,8 @@
         <br>
         <br>
         <div class="buttons has-addons">
-          <button class="button">Edit</button>
-          <button class="button"><%= link_to 'Info', pokemon %></button>
-          <button class="button">Delete</button>
+          <%= link_to "Edit", edit_pokemon_path(pokemon), class: "button" %>
+          <%= link_to 'Info', pokemon, class: "button"%>
         </div>
         <br>
         <br>
