@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'httparty'
-
 # Class conection for Pokiapi
 class ConnectApi
   include HTTParty

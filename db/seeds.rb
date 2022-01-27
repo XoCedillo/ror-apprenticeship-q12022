@@ -6,13 +6,14 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Pokemon.destroy_all
-p 'pokemons table cleaned'
-Ability.destroy_all
-p 'abilities table cleaned'
-Type.destroy_all
-p 'types table cleaned'
-
+def clean_tables
+  Pokemon.destroy_all
+  p 'pokemons table cleaned...'
+  Ability.destroy_all
+  p 'abilities table cleaned...'
+  Type.destroy_all
+  p 'types table cleaned...'
+end
 
 def fill_types
   types = PokemonService::GetTypes.new(fields: %w[name url]).call
@@ -44,12 +45,19 @@ def fill_abilities
   end
 end
 
-def fiil_pokemons
-  pokemons = PokemonService::GetPokemons.new('pokemons').call
+def fill_pokemons
+  fields = %w[name url sprites height weight abilities types]
+  pokemons = PokemonService::GetPokemons.new(fields: fields).call(limit: 200)
   pokemons.each do |p|
-    pokemon = Pokemon.new 
+    pokemon = Pokemon.new
+    pokemon.poke_id = p[:poke_id]
     pokemon.name = p[:name]
-    ...
+    pokemon.url = p[:url]
+    pokemon.sprite = p[:sprites]['front_default']
+    pokemon.height = p[:height]
+    pokemon.weight = p[:weight]
+    fill_ability_pokemons(p[:abilities])
+    fill_pokemon_types(p[:types])
     if pokemon.save
       p "pokemon: #{p[:name]}, has been added sucessfully"
     else
@@ -58,4 +66,37 @@ def fiil_pokemons
   end
 end
 
+def fill_pokemon_abilities(pokemon_abilities)
+  puts '---------------------------------'
+  puts 'Filling pokemon abilities:'
+  puts '---------------------------------'
+  pokemon_abilities.each do |ability|
+    ability_pokemon = Ability.find_by_name(ability['ability']['name'])
+    pokemon.abilities << ability_pokemon
+  end
+end
 
+def fill_pokemon_types(pokemon_types)
+  puts '---------------------------------'
+  puts 'Filling pokemon types:'
+  puts '---------------------------------'
+  p[:types].each do |type|
+    pokemon_types = Type.find_by_name(type['type']['name'])
+    pokemon.types << pokemon_types
+  end
+end
+
+puts 'Calling seeds.rb....'
+puts '... Cleaning tables'
+clean_tables
+puts '---------------------------------'
+puts 'Populating the table abilities:'
+puts '---------------------------------'
+fill_abilities
+puts '---------------------------------'
+puts 'Populating the table types:'
+puts '---------------------------------'
+fill_types
+puts '---------------------------------'
+puts 'Populating the table pokemons:'
+puts '---------------------------------'
