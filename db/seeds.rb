@@ -21,11 +21,11 @@ def fill_types
     type = Type.new
     type.poke_id = t[:poke_id]
     type.name = t[:name]
-    type.name = t[:url]
+    type.url = t[:url]
     if type.save
-      p "type: #{a[:name]}, has been added sucessfully"
+      p "type: #{t[:name]}, has been added sucessfully"
     else
-      p "type: #{a[:name]}, #{type.errors.messages}" # ---> iterar sobre las llaves de error
+      p "type: #{t[:name]}, #{type.errors.messages}" # ---> iterar sobre las llaves de error
     end
   end
 end
@@ -36,7 +36,7 @@ def fill_abilities
     ability = Ability.new
     ability.poke_id = a[:poke_id]
     ability.name = a[:name]
-    ability.name = a[:url]
+    ability.url = a[:url]
     if ability.save
       p "ability: #{a[:name]}, has been added sucessfully"
     else
@@ -47,7 +47,7 @@ end
 
 def fill_pokemons
   fields = %w[name url sprites height weight abilities types]
-  pokemons = PokemonService::GetPokemons.new(fields: fields).call(limit: 200)
+  pokemons = PokemonService::GetPokemons.new(fields: fields).call(limit: 100)
   pokemons.each do |p|
     pokemon = Pokemon.new
     pokemon.poke_id = p[:poke_id]
@@ -56,8 +56,8 @@ def fill_pokemons
     pokemon.sprite = p[:sprites]['front_default']
     pokemon.height = p[:height]
     pokemon.weight = p[:weight]
-    fill_ability_pokemons(p[:abilities])
-    fill_pokemon_types(p[:types])
+    fill_pokemon_abilities(pokemon, p[:abilities])
+    fill_pokemon_types(pokemon, p[:types])
     if pokemon.save
       p "pokemon: #{p[:name]}, has been added sucessfully"
     else
@@ -66,7 +66,7 @@ def fill_pokemons
   end
 end
 
-def fill_pokemon_abilities(pokemon_abilities)
+def fill_pokemon_abilities(pokemon, pokemon_abilities)
   puts '---------------------------------'
   puts 'Filling pokemon abilities:'
   puts '---------------------------------'
@@ -76,27 +76,28 @@ def fill_pokemon_abilities(pokemon_abilities)
   end
 end
 
-def fill_pokemon_types(pokemon_types)
+def fill_pokemon_types(pokemon, pokemon_types)
   puts '---------------------------------'
   puts 'Filling pokemon types:'
   puts '---------------------------------'
-  p[:types].each do |type|
-    pokemon_types = Type.find_by_name(type['type']['name'])
-    pokemon.types << pokemon_types
+  pokemon_types.each do |type|
+    pokemon_type = Type.find_by_name(type['type']['name'])
+    pokemon.types << pokemon_type
   end
 end
 
-puts 'Calling seeds.rb....'
-puts '... Cleaning tables'
-clean_tables
-puts '---------------------------------'
-puts 'Populating the table abilities:'
-puts '---------------------------------'
-fill_abilities
-puts '---------------------------------'
-puts 'Populating the table types:'
-puts '---------------------------------'
-fill_types
+# puts 'Calling seeds.rb....'
+# puts '... Cleaning tables'
+# clean_tables
+# puts '---------------------------------'
+# puts 'Populating the table abilities:'
+# puts '---------------------------------'
+# fill_abilities
+# puts '---------------------------------'
+# puts 'Populating the table types:'
+# puts '---------------------------------'
+# fill_types
 puts '---------------------------------'
 puts 'Populating the table pokemons:'
 puts '---------------------------------'
+fill_pokemons
